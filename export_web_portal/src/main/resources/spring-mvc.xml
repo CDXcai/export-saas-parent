@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!--springmvc的配置-->
+    <!--扫描包-->
+    <context:component-scan base-package="com.itheima.web"></context:component-scan>
+    <!--注解的支持-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <!--dubbo的配置-->
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="export_web_portal"  />
+
+    <!-- 使用multicast广播注册中心暴露服务地址 -->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" />
+
+    <!--dubbo的注解扫描-->
+    <dubbo:annotation package="com.itheima.web"></dubbo:annotation>
+</beans>
