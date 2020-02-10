@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.stat.StatDao">
+    <!--
+       //查询厂家销售统计
+    List<Map> findFactory(String companyId);
+    List<对象>
+    -->
+  <select id="findFactory" parameterType="string" resultType="map">
+    SELECT factory_name AS `name` , SUM(amount) AS `value`  FROM `co_contract_product`
+        WHERE company_id = #{companyId}
+        GROUP BY factory_name
+        ORDER BY `value` DESC
+        LIMIT 10
+
+  </select>
+
+    <!--
+        //产品的销售排行
+    List<Map> findSell(String companyId);
+    -->
+    <select id="findSell" parameterType="string" resultType="map">
+        SELECT product_no AS `name` , SUM(amount) AS `value` FROM `co_contract_product`
+            WHERE company_id = #{companyId}
+            GROUP BY product_no
+            ORDER BY `value` DESC
+            LIMIT 10
+  </select>
+
+    <!--
+        //系统访问压力图
+    List<Map> findOnline(String companyId);
+    -->
+    <select id="findOnline" parameterType="string" resultType="map">
+        SELECT oi.`A1` AS `name`, IFNULL(sl.`value`, 0) AS `value` FROM `st_online_info` oi
+            LEFT JOIN
+                (SELECT
+                    DATE_FORMAT(TIME , "%H") AS `name` ,COUNT(*)  AS `value`
+                    FROM `st_sys_log`
+                    WHERE company_id = #{companyId}
+                    GROUP BY `name`) AS sl
+            ON oi.A1=sl.name
+
+  </select>
+</mapper>

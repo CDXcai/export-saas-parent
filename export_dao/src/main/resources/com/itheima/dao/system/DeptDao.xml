@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.system.DeptDao">
+    <resultMap id="baseResultMap" type="com.itheima.domain.system.Dept">
+        <!--主键-->
+        <id property="id" column="dept_id"></id>
+        <!--普通字段-->
+        <result property="deptName" column="dept_name"></result>
+        <!-- 上级id <result property="parentId" column="parent_id"></result> 根据上级的id 查询上级部门对象 即可-->
+        <result property="state" column="state"></result>
+        <result property="companyId" column="company_id"></result>
+        <result property="companyName" column="company_name"></result>
+        <!--
+            一对一配置
+                property=""  赋值到实体类中的属性名称  private Dept parent;//上级部门
+                select=""  调用哪个方法查询  全限定类名+方法名称 namespace + id
+                column="" 调用方法的时候 传递的参数(数据库字段)
+                javaType="com.itheima.domain.system.Dept"   封装属性的类型
+        -->
+        <association property="parent" javaType="com.itheima.domain.system.Dept"
+                     column="parent_id" select="com.itheima.dao.system.DeptDao.findById" ></association>
+    </resultMap>
+    <!--
+        //分页查询数据
+    List<Dept> findAll();
+    -->
+  <select id="findAll" resultMap="baseResultMap">
+    select * from pe_dept where company_id = #{companyId}
+  </select>
+
+    <!--
+    //查询部门对象
+    Dept findById(String id);-->
+    <select id="findById" parameterType="string" resultMap="baseResultMap">
+        select * from pe_dept where dept_id = #{id}
+    </select>
+
+
+    <!--
+    //增
+    void save(Dept dept);
+    -->
+    <insert id="save" parameterType="com.itheima.domain.system.Dept">
+        insert into pe_dept
+        (dept_id,dept_name,parent_id,state,company_id,company_name)
+        values
+        (#{id},#{deptName},#{parent.id},#{state},#{companyId},#{companyName})
+
+    </insert>
+    <!--
+    //删
+    void delete(String id);
+    -->
+    <delete id="delete" parameterType="string">
+        delete from pe_dept where dept_id = #{id}
+    </delete>
+    <!--
+    //改
+    void update(Dept dept);
+    -->
+    <update id="update" parameterType="com.itheima.domain.system.Dept">
+        update pe_dept set
+            dept_name=#{deptName},
+            parent_id=#{parent.id},
+            state=#{state},
+            company_id=#{companyId},
+            company_name=#{companyName}
+        where dept_id= #{id}
+    </update>
+</mapper>
