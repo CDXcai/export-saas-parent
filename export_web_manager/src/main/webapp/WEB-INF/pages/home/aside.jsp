@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="../base.jsp"%>
+<%@ include file="../base.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" language="java" %>
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -43,37 +43,46 @@
             </c:forEach>
 --%>
 
-         <%----%>
+            <%----%>
+
             <c:forEach items="${moduleList}" var="parentModule">
                 <li class="treeview">
-                <%--一级标题--%>
+
+                        <%--一级标题--%>
                     <c:if test="${parentModule.ctype==0}">
-                       <a href="#">
-                           <i class="fa fa-cube"></i> <span>${parentModule.name}</span>
-                           <span class="pull-right-container">
+                        <a href="#">
+                            <i class="fa fa-cube"></i> <span>${parentModule.name}</span>
+                            <span class="pull-right-container">
                                <i class="fa fa-angle-left pull-right"></i>
                            </span>
-                       </a>
+                        </a>
                     </c:if>
-                   <%--二级标题--%>
-                   <ul class="treeview-menu">
+                        <%--二级标题--%>
+                    <ul class="treeview-menu">
 
-                       <c:forEach items="${moduleList}" var="childModule">
-                           <%--二级菜单 : 属于某个一级菜单的子菜单--%>
-                           <c:if test="${childModule.ctype==1 and childModule.parentId==parentModule.id}">
-                               <li id="company-manager">
-                                   <a href="${ctx}/${childModule.curl}" onclick="setSidebarActive(this)"  target="iframe">
-                                       <i class="fa fa-circle-o"></i>${childModule.name}
-                                   </a>
-                               </li>
-                           </c:if>
-                       </c:forEach>
-                   </ul>
-           </li>
+                        <c:forEach items="${moduleList}" var="childModule">
+                            <%--二级菜单 : 属于某个一级菜单的子菜单--%>
+                            <c:if test="${childModule.ctype==1 and childModule.parentId==parentModule.id}">
+                                <li id="company-manager">
+                                    <a href="${ctx}/${childModule.curl}" onclick="setSidebarActive(this)"
+                                       target="iframe">
+                                        <i class="fa fa-circle-o"></i>${childModule.name}
+                                    </a>
+                                </li>
+                            </c:if>
+                        </c:forEach>
+                    </ul>
+                </li>
             </c:forEach>
+            <%--聊天室页面--%>
+            <li class="treeview">
+                <a href="/chatRoom/toChatRoom.do" onclick="setSidebarActive(this)" target="iframe">
+                    <i class="fa fa-circle-o"></i>聊天室
+                </a>
+            </li>
 
-                   </ul>
+        </ul>
 
-               </section>
-               <!-- /.sidebar -->
+    </section>
+    <!-- /.sidebar -->
 </aside>
