@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--1.加载定时任务的类-->
+    <bean id="myJob" class="com.itheima.web.controller.quartz.MyJob"></bean>
+    <!--2.声明此类是一个特殊的类  定时任务类  JobDetail-->
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!--配置类-->
+        <property name="targetObject" ref="myJob"></property>
+        <!--配置定时任务的方法-->
+        <property name="targetMethod" value="run"></property>
+    </bean>
+    <!--3.配置 触发器(什么时候触发执行代码) trigger-->
+    <bean id="myTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!--将类和方法交给触发器-->
+        <property name="jobDetail" ref="jobDetail"></property>
+        <!--配置执行的时间 非常重要 每五秒执行一次    七子表达式-->
+        <property name="cronExpression" value="0/5 * * * * ? *"></property>
+    </bean>
+    <!--4.配置调度 (执行触发器)-->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="myTrigger"></ref>
+            </list>
+        </property>
+    </bean>
+</beans>
