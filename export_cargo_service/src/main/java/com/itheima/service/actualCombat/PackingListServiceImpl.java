@@ -24,6 +24,7 @@ public class PackingListServiceImpl implements PackingListService {
 
     @Autowired
     private ExportDao exportDao;
+
     /**
      * 保存装箱单信息  装箱单的信息从报运表中获得
      * 1.报运表
@@ -38,8 +39,8 @@ public class PackingListServiceImpl implements PackingListService {
     public void save(PackingList packingList) {
         //1.报运表
         String exportIds = packingList.getExportIds();
-        String exportNos= "";
-        if(!StringUtils.isBlank(exportIds)){//id非空
+        String exportNos = "";
+        if (!StringUtils.isBlank(exportIds)) {//id非空
             //切割id
             String[] splitExportIds = exportIds.split(",");
             for (String splitExportId : splitExportIds) {
@@ -49,7 +50,7 @@ public class PackingListServiceImpl implements PackingListService {
                 //1.2 修改报运表数据的状态(状态修改为3 . 让装箱的时候 已经装箱的数据 不能再次查询出来的)
                 //修改状态
                 export.setState(3);
-                exportNos+=export.getCustomerContract();//拼接合同号
+                exportNos += export.getCustomerContract();//拼接合同号
                 exportDao.updateByPrimaryKeySelective(export);
             }
         }
@@ -73,6 +74,7 @@ public class PackingListServiceImpl implements PackingListService {
      * 删除装箱单
      * 1.报运表数据的修改
      * 2.删除装箱单信息
+     *
      * @param id
      */
     @Override
@@ -82,7 +84,7 @@ public class PackingListServiceImpl implements PackingListService {
         PackingList packingList = packingListDao.selectByPrimaryKey(id);
         //获得报运单的id
         String exportIds = packingList.getExportIds();
-        if(!StringUtils.isBlank(exportIds)){
+        if (!StringUtils.isBlank(exportIds)) {
             //数组数据
             String[] splitIds = exportIds.split(",");
             //1.查询到报运表数据
@@ -111,8 +113,18 @@ public class PackingListServiceImpl implements PackingListService {
 
     @Override
     public PageInfo findAll(PackingListExample example, int page, int size) {
-        PageHelper.startPage(page , size);
+        PageHelper.startPage(page, size);
         List<PackingList> packingLists = packingListDao.selectByExample(example);
         return new PageInfo(packingLists);
+    }
+
+    /**
+     * 不分页查询数据
+     * @param example
+     * @return
+     */
+    @Override
+    public List<PackingList> findAll(PackingListExample example) {
+        return packingListDao.selectByExample(example);
     }
 }
