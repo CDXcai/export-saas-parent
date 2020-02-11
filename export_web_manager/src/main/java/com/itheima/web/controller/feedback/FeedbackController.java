@@ -105,10 +105,8 @@ public class FeedbackController extends BaseController {
             feedback.setState("1");
             feedbackService.update(feedback);
         }
-        //跳转用的，暂时没有好的替代
-        List<Module> moduleList = moduleService.findByUser(loginUser);
-        request.setAttribute("moduleList",moduleList);
-        return "home/main";
+
+        return "redirect:/extend/feedback/success.do";
     }
     @RequestMapping(value = "/toAdd",name = "用户准备新建反馈")
     public String toAdd(){
@@ -130,5 +128,13 @@ public class FeedbackController extends BaseController {
         Feedback feedback = feedbackService.findById(id);
         request.setAttribute("feedback",feedback);
         return "/extend/feedback/feedback-view";
+    }
+    @RequestMapping(value = "success",name = "修改成功")
+    public String success(){
+        User loginUser = (User) session.getAttribute("loginUser");
+        //跳转用的，暂时没有好的替代
+        List<Module> moduleList = moduleService.findByUser(loginUser);
+        request.setAttribute("moduleList",moduleList);
+        return "home/main";
     }
 }

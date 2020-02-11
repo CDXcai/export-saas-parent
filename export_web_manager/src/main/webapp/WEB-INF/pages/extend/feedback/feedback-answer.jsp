@@ -36,6 +36,9 @@
             <form id="editForm" action="${ctx}/extend/feedback/edit.do" method="post">
                 <div class="row data-type" style="margin: 0px">
                     <input type="hidden" name="feedbackId" value="${feedback.feedbackId}">
+                    <input type="hidden" name="createBy" value="${feedback.createBy}">
+                    <input type="hidden" name="createDept" value="${feedback.createDept}">
+                    <input type="hidden" name="createTime" value="${feedback.createTime}">
 
                     <div class="col-md-2 title">提出人</div>
                     <div class="col-md-4 data">

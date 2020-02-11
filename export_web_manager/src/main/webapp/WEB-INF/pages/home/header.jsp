@@ -71,9 +71,13 @@
                                             <img src="${ctx}/img/user3-128x128.jpg" class="img-circle" alt="User Image">
                                         </div>
                                         <h4>
-                                            <p>${feedback.title}</p><c:if test="${feedback.state==0}"><p style="color: red">未解决</p></c:if>
-                                                                     <c:if test="${feedback.state==1}"><p style="color: green">已解决</p></c:if>
+                                            <p>${feedback.title}</p>
+                                            <c:if test="${feedback.isShare==0}"><p style="text-align: right">公开</p></c:if>
+                                            <c:if test="${feedback.isShare==1}"><p style="text-align: right">未公开</p></c:if>
                                         </h4>
+
+                                            <c:if test="${feedback.state==0}"><p style="color: red">未解决</p></c:if>
+                                            <c:if test="${feedback.state==1}"><p style="color: green">已解决</p></c:if>
                                             <c:if test="${feedback.createBy eq sessionScope.loginUser.id}"><p style="color: #3c8dbc;">我的反馈</p></c:if>
 
                                             <p>点击查看</p>

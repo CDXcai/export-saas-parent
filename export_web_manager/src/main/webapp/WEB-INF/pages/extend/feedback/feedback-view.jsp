@@ -65,7 +65,7 @@
 
                     <div class="col-md-2 title">解决方式</div>
                     <div class="col-md-4 data">
-                        <div class="form-group form-inline" readonly="">
+                        <div class="form-group form-inline">
                             <div class="radio"><label><input type="radio" ${feedback.classType==1?'checked':''} name="resolution" value="1" >已修改</label></div>
                             <div class="radio"><label><input type="radio" ${feedback.classType==2?'checked':''} name="resolution" value="2" >无需修改</label></div>
                             <div class="radio"><label><input type="radio" ${feedback.classType==3?'checked':''} name="resolution" value="3" >重复问题</label></div>
@@ -77,7 +77,7 @@
 
                     <div class="col-md-2 title">解决难度</div>
                     <div class="col-md-4 data">
-                        <div class="form-group form-inline" readonly="">
+                        <div class="form-group form-inline">
                             <div class="radio"><label><input type="radio" ${feedback.classType==1?'checked':''} name="difficulty" value="1" >极难</label></div>
                             <div class="radio"><label><input type="radio" ${feedback.classType==2?'checked':''} name="difficulty" value="2" >比较难</label></div>
                             <div class="radio"><label><input type="radio" ${feedback.classType==3?'checked':''} name="difficulty" value="3" >有难度</label></div>
