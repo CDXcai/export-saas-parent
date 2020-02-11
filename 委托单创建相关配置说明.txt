@@ -1,0 +1,2 @@
+1、修改数据库 ss_module 表。委托管理的curl为：actualCombat/shipping/list.do
+UPDATE ss_module SET curl = 'actualCombat/shipping/list.do' WHERE NAME = '委托管理';
