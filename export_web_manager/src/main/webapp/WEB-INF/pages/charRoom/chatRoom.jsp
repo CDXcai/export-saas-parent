@@ -22,63 +22,14 @@
 <div id="frameContent" class="content-wrapper" style="margin-left:0px;">
     <div class="wai">
 
-        <div class="context alert alert-light" style="overflow:auto" role="alert">
+        <div class="context alert alert-light" id="messageBox" style="overflow:auto" role="alert">
             <ul>
-
-                <li>
-
-                    <div class="receive">
-                        <font>2019-1-1 10:10:10</font><br>
-                        <div>
-                            收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息
-                        </div>
-                    </div>
-                </li>
-                <li>
-
-                    <div class="send">
-                        <font>2019-1-1 10:10:10</font><br>
-                        <div>
-                            发送消息发送消息发送消息发送消息发送消息发送消息发送消息发送消息发送消息发送消息发送消息发送消息
-                        </div>
-                    </div>
-                </li>
-
-                <li>
-
-                    <div class="receive">
-                        <font>2019-1-1 10:10:10</font><br>
-                        <div>
-                            收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息
-                        </div>
-                    </div>
-                </li>
-                <li>
-
-                    <div class="receive">
-                        <font>2019-1-1 10:10:10</font><br>
-                        <div>
-                            收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息
-                        </div>
-                    </div>
-                </li>
-
-
-                <li>
-
-                    <div class="receive">
-                        <font>2019-1-1 10:10:10</font><br>
-                        <div>
-                            收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息收到消息
-                        </div>
-                    </div>
-                </li>
 
             </ul>
         </div>
         <div class="botton">
-            <input type="text" class="botton_text form-control">
-            <input type="button" value="发送消息" class="botton_button btn btn-info">
+            <input type="text"  id="sendMessageContext" class="botton_text form-control">
+            <input type="button" id="sendMessage" value="发送消息" class="botton_button btn btn-info">
         </div>
     </div>
 </div>

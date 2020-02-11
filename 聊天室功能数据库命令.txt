@@ -1,0 +1,14 @@
+use saas-export;
+CREATE TABLE `char_room_content` (
+  `time` DATETIME DEFAULT NULL,
+  `context` VARCHAR(100) DEFAULT NULL,
+  `company_id` VARCHAR(40) DEFAULT NULL,
+  `user_id` VARCHAR(40) DEFAULT NULL,
+  `user_name` VARCHAR(20) DEFAULT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8
+
+CREATE TABLE `char_room_is_receive` (
+  `user_id` VARCHAR(40) DEFAULT NULL,
+  `messageTime` DATETIME DEFAULT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8
+

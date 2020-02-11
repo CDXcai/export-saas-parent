@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--接口的动态代理方式 namespace="接口的全限定类名"-->
+<mapper namespace="com.itheima.dao.chatRoom.CharRoomContentDao">
+    <resultMap id="baseMap" type="com.itheima.domain.chatRoom.CharRoomContent">
+        <result column="user_id" property="userId"></result>
+        <result column="company_id" property="companyId"></result>
+        <result column="user_name" property="userName"></result>
+    </resultMap>
+    <!--
+    // 查询指定用户未读的消息
+    List<CharRoomContent> findByCompanyId(@Param("cid") String companyId,@Param("uid") String userId);
+    -->
+    <select id="findByCompanyId" resultMap="baseMap">
+      SELECT * FROM char_room_content WHERE TIME NOT IN
+(SELECT messageTime FROM char_room_is_receive WHERE user_id = #{uid} )
+AND company_id = #{cid} AND user_id != #{uid}
+ORDER BY TIME DESC;
+    </select>
+
+
+    <!--// 消息信息添加到数据库中
+    void save(CharRoomContent charRoomContent);-->
+    <insert id="save" parameterType="com.itheima.domain.chatRoom.CharRoomContent">
+        INSERT INTO char_room_content VALUES (#{time} , #{context} ,#{companyId},#{userId},#{userName});
+    </insert>
+</mapper>
