@@ -263,7 +263,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">修改密码</a>
+                                <a href="${ctx}/system/user/toChangePassword.do" class="btn btn-default btn-flat">修改密码</a>
                             </div>
                             <div class="pull-right">
                                 <a href="/logout.do" class="btn btn-default btn-flat">注销</a>

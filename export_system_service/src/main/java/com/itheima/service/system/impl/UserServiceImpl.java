@@ -2,6 +2,8 @@ package com.itheima.service.system.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.itheima.common.utils.Encrypt;
+import com.itheima.common.utils.UtilFuns;
 import com.itheima.dao.system.UserDao;
 import com.itheima.domain.system.User;
 import com.itheima.service.system.UserService;
@@ -67,5 +69,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         return userDao.findByEmail(email);
+    }
+
+    /**
+     * 修改密码
+     * @param email
+     * @param password
+     */
+    @Override
+    public void changePassword(String email, String password) {
+        //密码加密
+        String md5Password = Encrypt.md5(password, email);
+        userDao.changePassword(email, md5Password);
     }
 }

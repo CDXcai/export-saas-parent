@@ -1,6 +1,7 @@
 package com.itheima.dao.system;
 
 import com.itheima.domain.system.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +25,7 @@ public interface UserDao {
 
 	//根据邮箱获得用户数据
     User findByEmail(String email);
+
+    //修改密码
+	void changePassword(@Param("email") String email, @Param("password") String password);
 }
