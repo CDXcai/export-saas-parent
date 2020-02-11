@@ -56,7 +56,7 @@ public class ShippingController extends BaseController {
 
     @RequestMapping(value = "/toAdd", name = "跳转委托单新增页面")
     public String toAdd() {
-        System.out.println("新增");
+        //System.out.println("新增");
         // 获取状态为1的装箱单
         PackingListExample example = new PackingListExample();
         PackingListExample.Criteria criteria = example.createCriteria();
@@ -80,7 +80,7 @@ public class ShippingController extends BaseController {
     public String toUpdate(String id) {
         // 获取委托单信息
         Shipping shipping = shippingService.findById(id);
-        System.out.println("shipping = " + shipping);
+        //System.out.println("shipping = " + shipping);
         request.setAttribute("shipping",shipping);
         // 查询 该委托单对应的装箱单
         PackingList packingList = packingListService.findById(id);

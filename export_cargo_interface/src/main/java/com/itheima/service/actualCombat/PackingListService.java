@@ -34,4 +34,10 @@ public interface PackingListService {
     PageInfo findAll(PackingListExample example, int page, int size);
 
 
+    /**
+     * 不需要分页查询，guojy
+     * @param example
+     * @return
+     */
+    List<PackingList> findAll(PackingListExample example);
 }
