@@ -134,4 +134,15 @@ public class ShippingController extends BaseController {
         return "redirect:/actualCombat/shipping/list.do";
     }
 
+    @RequestMapping(value = "toMap", name = "地图")
+    public String toMap(String id){
+
+        // 查询指定id的对象
+        Shipping shipping = shippingService.findById(id);
+        // 添加到请求域中
+        request.setAttribute("startAddress",shipping.getPortOfTrans());
+        request.setAttribute("endAddress",shipping.getPortOfDischarge());
+        return "actualCombat/shipping/shipping-map";
+    }
+
 }
