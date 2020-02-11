@@ -219,8 +219,10 @@ public class UserController extends BaseController {
     public String toChangePassword() {
         //从会话中获取当前对象
         User user = (User) session.getAttribute("loginUser");
+        String password = (String) session.getAttribute("password");
         //将当前对象存入域
         request.setAttribute("user", user);
+        request.setAttribute("password", password);
         return "system/user/user-changePassword";
     }
 
@@ -235,8 +237,15 @@ public class UserController extends BaseController {
         //获取表单传入的用户邮箱和新密码
         String email = user.getEmail();
         String newPassword = user.getPassword();
-        //修改密码
-        userService.changePassword(email, newPassword);
+        //从会话中获取当前对象,方便密码的比较
+        User loginUser = (User) session.getAttribute("loginUser");
+        String password = (String) session.getAttribute("password");
+        //修改密码，如果密码为空，后者修改前后密码相同，提示用户密码未修改
+        if (StringUtils.isEmpty(newPassword) || loginUser.getPassword().equals(password)) {
+            request.setAttribute("error", "密码未修改");
+            return "forward:/system/user/toChangePassword.do";
+        }
+        userService.changePassword(email, newPassword);//修改密码
         //修改之后须新密码重新登录
         return "redirect:/logout.do";
     }

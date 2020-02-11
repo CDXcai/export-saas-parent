@@ -41,21 +41,24 @@
             <form id="editForm" action="${ctx}/system/user/changePassword.do" method="post">
                 <input type="hidden"  name="email" value="${user.email}">
                 <div class="row data-type" style="margin: 0px">
+                    <div class="col-md-1 title">旧密码</div>
+                    <div class="col-md-5 data">
+                        <input type="text" class="form-control" placeholder="旧密码" value="${password}">
+                    </div>
                     <div class="col-md-1 title">新密码</div>
                     <div class="col-md-5 data">
-                        <input type="text" class="form-control" placeholder="密码" name="password">
+                        <input type="text" class="form-control" placeholder="新密码" name="password" value="${error}">
                     </div>
                 </div>
             </form>
         </div>
-        <!--订单信息/-->
-
         <!--工具栏-->
         <div class="box-tools text-center">
             <button type="button" onclick='document.getElementById("editForm").submit()' class="btn bg-maroon">保存</button>
             <button type="button" class="btn bg-default" onclick="history.back(-1);">返回</button>
         </div>
         <!--工具栏/-->
+
 
     </section>
     <!-- 正文区域 /-->

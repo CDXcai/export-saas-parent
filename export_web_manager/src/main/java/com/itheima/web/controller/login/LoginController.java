@@ -100,6 +100,8 @@ public class LoginController extends BaseController {
             User user = (User)subject.getPrincipal();
             //4.将user放入session
             session.setAttribute("loginUser" , user);
+            //将原密码存入会话中方便修改时进行比较
+            session.setAttribute("password",password);
 
             //5.查询模块信息
             List<Module> moduleList = moduleService.findByUser(user);
