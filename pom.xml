@@ -22,6 +22,8 @@
         <module>export_stat_interface</module>
         <module>export_stat_service</module>
         <module>export_mail</module>
+        <module>export_feedback_interface</module>
+        <module>export_feedback_service</module>
     </modules>
 
     <!-- 集中定义依赖版本号 snapshot 测试版  release 发行版 -->

@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" language="java" %>
 <%@ include file="../base.jsp"%>
 <header class="main-header">
@@ -18,7 +19,9 @@
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
-                        <span class="label label-success">4</span>
+                        <c:if test="${sessionScope.loginUser.degree==0}">
+                        <span class="label label-success" id="feedbackNum"></span>
+                        </c:if>
                     </a>
 
 
@@ -38,80 +41,59 @@
 
 <%--------------------------------------------------%>
 
-
+                    <script>
+                        //动态修改上级模块的数据
+                        $(function () {
+                            //发送ajax
+                            $.get("${ctx}/extend/feedback/list.do",function (data) {
+                                if (data!=0){
+                                    $("#feedbackNum1").html("有"+data+"个未解决的问题");
+                                }else {
+                                    $("#feedbackNum1").html("所有问题都已解决");
+                                }
+                                $("#feedbackNum").html(data)
+                        });
+                        });
+                    </script>
 
 
                     <%----%>
                     <ul class="dropdown-menu">
-                        <li class="header">你有4个邮件</li>
+                        <c:if test="${sessionScope.loginUser.degree==0}">
+                        <li class="header" id="feedbackNum1">有个未解决的问题</li>
+                        </c:if>
                         <li>
                             <ul class="menu">
+                                <c:forEach items="${sessionScope.feedbackList}" var="feedback">
                                 <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="${ctx}/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                                        </div>
-                                        <h4>
-                                            系统消息
-                                            <small><i class="fa fa-clock-o"></i> 5 分钟前</small>
-                                        </h4>
-                                        <p>欢迎登录系统?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
+                                    <a href="${ctx}/extend/feedback/toUpdate.do?id=${feedback.feedbackId}" id="skip">
                                         <div class="pull-left">
                                             <img src="${ctx}/img/user3-128x128.jpg" class="img-circle" alt="User Image">
                                         </div>
                                         <h4>
-                                            团队消息
-                                            <small><i class="fa fa-clock-o"></i> 2 小时前</small>
+                                            <p>${feedback.title}</p><c:if test="${feedback.state==0}"><p style="color: red">未解决</p></c:if>
+                                                                     <c:if test="${feedback.state==1}"><p style="color: green">已解决</p></c:if>
                                         </h4>
-                                        <p>你有新的任务了</p>
+                                            <c:if test="${feedback.createBy eq sessionScope.loginUser.id}"><p style="color: #3c8dbc;">我的反馈</p></c:if>
+
+                                            <p>点击查看</p>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="${ctx}/img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                                        </div>
-                                        <h4>
-                                            Developers
-                                            <small><i class="fa fa-clock-o"></i> Today</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="${ctx}/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                                        </div>
-                                        <h4>
-                                            Sales Department
-                                            <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="${ctx}/img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                                        </div>
-                                        <h4>
-                                            Reviewers
-                                            <small><i class="fa fa-clock-o"></i> 2 days</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
+                                </c:forEach>
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">See All Messages</a></li>
+                        <c:if test="${sessionScope.loginUser.degree!=0}">
+                        <li class="footer"><a href="${ctx}/extend/feedback/toAdd.do">发送反馈</a></li>
+                        </c:if>
                     </ul>
                 </li>
+
+
+
+
                 <!-- Notifications: style can be found in dropdown.less -->
+
+
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
@@ -153,6 +135,9 @@
                         <li class="footer"><a href="#">View all</a></li>
                     </ul>
                 </li>
+
+
+
                 <!-- Tasks: style can be found in dropdown.less -->
                 <li class="dropdown tasks-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
