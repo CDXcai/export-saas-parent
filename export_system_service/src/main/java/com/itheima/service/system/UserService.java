@@ -26,4 +26,7 @@ public interface UserService {
 
     //根据邮箱获得用户对象
     User findByEmail(String email);
+
+    //修改密码
+    void changePassword(String email, String password);
 }

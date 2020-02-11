@@ -29,50 +29,54 @@ public class UserController extends BaseController {
 
     /**
      * 用户查询 : 根据企业进行用户查询
+     *
      * @return
      */
-    @RequestMapping(value = "/list" ,name = "用户查询")
-    public String list(@RequestParam(defaultValue ="1") Integer page ,@RequestParam(defaultValue ="5") Integer size){
+    @RequestMapping(value = "/list", name = "用户查询")
+    public String list(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer size) {
         //String companyId = "1"; //必须动态获得 根据不同的登录用户 获得企业id
         //1.需要service 调用分页方法
-        PageInfo pageInfo = userService.findByPage(page , size , companyId);
+        PageInfo pageInfo = userService.findByPage(page, size, companyId);
         //2.将返回的分页对象 放入request域
-        request.setAttribute("page" , pageInfo);
+        request.setAttribute("page", pageInfo);
         return "system/user/user-list";
     }
 
 
-
     @Autowired //注入 容器启动的时候注入
     private DeptService deptService;
+
     /**
      * 跳转用户添加页面
+     *
      * @return
      */
-    @RequestMapping(value = "/toAdd" ,name = "跳转用户添加页面")
-    public String toAdd(){
+    @RequestMapping(value = "/toAdd", name = "跳转用户添加页面")
+    public String toAdd() {
         //查询部门数据  deptService 空. 热部署 项目还在运行 直接更新到代码中
         List<Dept> deptList = deptService.findAll(companyId);
         //将list存入域中
-        request.setAttribute("deptList" , deptList);
+        request.setAttribute("deptList", deptList);
         //跳转页面
         return "system/user/user-add";
     }
 
     @Autowired
     private RabbitMQProducer rabbitMQProducer;
+
     /**
      * 添加和修改的代码
      * 修改会携带id  添加不会携带id
+     *
      * @return
      */
-    @RequestMapping(value = "/edit" ,name = "添加或者修改用户")
-    public String edit(User user){//, String action  表示当天调用的方法
+    @RequestMapping(value = "/edit", name = "添加或者修改用户")
+    public String edit(User user) {//, String action  表示当天调用的方法
         //暂时写死
         user.setCompanyId(companyId);
         user.setCompanyName(companyName);
 
-        if(StringUtils.isEmpty(user.getId())){//增加
+        if (StringUtils.isEmpty(user.getId())) {//增加
             try {
                 String password = user.getPassword();//明文
                 String md5Password = Encrypt.md5(password, user.getEmail());//加密
@@ -82,21 +86,21 @@ public class UserController extends BaseController {
                 //userService.save(user);
                 //新增用户以后发送一封邮件
                 String to = user.getEmail();// 收件人 必须是动态的
-                String subject="注册成功";//主题
+                String subject = "注册成功";//主题
                 System.out.println(password);
                 System.out.println(md5Password);
-                String content = "恭喜您,加入到saas-export平台,您的密码是:"+password+",md5密码:"+md5Password;//内容  此处必须是明文的密码
+                String content = "恭喜您,加入到saas-export平台,您的密码是:" + password + ",md5密码:" + md5Password;//内容  此处必须是明文的密码
                 //MailUtil.sendMsg(to , subject  , content );
-                Map<String , String> map = new HashMap<>();
-                map.put("to" ,to );
-                map.put("subject" ,subject );
-                map.put("content" ,content );
+                Map<String, String> map = new HashMap<>();
+                map.put("to", to);
+                map.put("subject", subject);
+                map.put("content", content);
                 //发送消息给中间件
-                rabbitMQProducer.sendData("mail.send" , map);
+                rabbitMQProducer.sendData("mail.send", map);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{//修改
+        } else {//修改
             userService.update(user);
         }
         return "redirect:/system/user/list.do";
@@ -106,62 +110,65 @@ public class UserController extends BaseController {
      * 查询用户数据跳转页面
      * 1.查询用户对象
      * 2.查询部门列表数据
+     *
      * @return
      */
-    @RequestMapping(value = "/toUpdate" , name = "查询用户数据跳转页面")
-    public String toUpdate(String id){
+    @RequestMapping(value = "/toUpdate", name = "查询用户数据跳转页面")
+    public String toUpdate(String id) {
 
         //String companyId = "1";
         //查询对象
         User user = userService.findById(id);
         //存入域
-        request.setAttribute("user" , user);
+        request.setAttribute("user", user);
 
         //部门数据
         List<Dept> deptList = deptService.findAll(companyId);
-        request.setAttribute("deptList" , deptList);
+        request.setAttribute("deptList", deptList);
         return "system/user/user-update";
     }
 
 
     /**
      * 删除用户
+     *
      * @return
      */
-    @RequestMapping(value = "/delete" , name = "删除用户")
-    public String delete(String id){
+    @RequestMapping(value = "/delete", name = "删除用户")
+    public String delete(String id) {
         userService.delete(id);
 
         return "redirect:/system/user/list.do";
     }
 
 
-
     //----------------------------------------------------------------------------------------------------
     @Autowired
     private RoleService roleService;
+
     /**
      * 跳转角色分配页面
-     *  //1.查询当前的用户信息数据
-     *  User user = userService.findById(id);
-     *  //2.查询出所有的角色数据
-     *  List<Role> roleList = roleService.findAll(companyId);
-     *  //3.根据用户id 查询角色的信息
-     *  #根据用户id 查询角色的信息
+     * //1.查询当前的用户信息数据
+     * User user = userService.findById(id);
+     * //2.查询出所有的角色数据
+     * List<Role> roleList = roleService.findAll(companyId);
+     * //3.根据用户id 查询角色的信息
+     * #根据用户id 查询角色的信息
      * SELECT * FROM pe_role WHERE role_id IN (
-     * 	SELECT role_id FROM pe_role_user
-     * 	WHERE user_id = '002108e2-9a10-4510-9683-8d8fd1d374ef'
-     *  )
+     * SELECT role_id FROM pe_role_user
+     * WHERE user_id = '002108e2-9a10-4510-9683-8d8fd1d374ef'
+     * )
+     *
      * @return
      */
-    @RequestMapping(value = "/roleList" , name = "跳转角色分配页面")
-    public String roleList(String id){//id为用户id
+    @RequestMapping(value = "/roleList", name = "跳转角色分配页面")
+    public String roleList(String id) {//id为用户id
         //1.查询当前的用户信息数据
         User user = userService.findById(id);
-        request.setAttribute("user" , user);
+        request.setAttribute("user", user);
         //2.查询出所有的角色数据
         List<Role> roleList = roleService.findAll(companyId);
-        request.setAttribute("roleList" , roleList);
+        request.setAttribute("roleList", roleList);
         //System.out.println(roleList.size());
         //3.当前用户具有的角色信息
         List<Role> userRoleList = roleService.findByUid(id);
@@ -169,10 +176,10 @@ public class UserController extends BaseController {
         //拼接成一个字符串id 在页面使用包含的语法判断
         String userRoleStr = "";
         for (Role role : userRoleList) {
-            userRoleStr+=role.getId()+",";
+            userRoleStr += role.getId() + ",";
         }
         //System.out.println(userRoleStr);
-        request.setAttribute("userRoleStr" , userRoleStr);
+        request.setAttribute("userRoleStr", userRoleStr);
         //角色分配页面
         return "system/user/user-role";
     }
@@ -188,17 +195,49 @@ public class UserController extends BaseController {
      * roleIds: 4028a1cd4ee2d9d6014ee2df4c6a0000
      * roleIds: 4028a1cd4ee2d9d6014ee2df4c6a0001
      * roleIds: 4028a1cd4ee2d9d6014ee2df4c6a0002
+     *
      * @return
      */
-    @RequestMapping(value = "/changeRole" , name = "修改用户的权限")
-    public String changeRole(String userid , String roleIds){
+    @RequestMapping(value = "/changeRole", name = "修改用户的权限")
+    public String changeRole(String userid, String roleIds) {
         //修改完后跳转查询用户页面
         //controller没有事务
         //1.删除当前用户原本的角色数据
         //2.添加新的角色
         //必须在service层中编写逻辑代码
-        roleService.changeRole(userid , roleIds);
+        roleService.changeRole(userid, roleIds);
 
         return "redirect:/system/user/list.do";
+    }
+
+    /**
+     * 跳转修改密码页面
+     *
+     * @return 修改密码界面
+     */
+    @RequestMapping(value = "/toChangePassword", name = "跳转修改密码页面")
+    public String toChangePassword() {
+        //从会话中获取当前对象
+        User user = (User) session.getAttribute("loginUser");
+        //将当前对象存入域
+        request.setAttribute("user", user);
+        return "system/user/user-changePassword";
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param user 要修改的用户的数据
+     * @return
+     */
+    @RequestMapping(value = "changePassword", name = "修改密码")
+    public String changePassword(User user) {
+        //获取表单传入的用户邮箱和新密码
+        String email = user.getEmail();
+        String newPassword = user.getPassword();
+        //修改密码
+        userService.changePassword(email, newPassword);
+        //修改之后须新密码重新登录
+        return "redirect:/logout.do";
     }
 }
