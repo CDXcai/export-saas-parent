@@ -88,7 +88,7 @@
                             </div>
                             <input type="text" placeholder="装货日期" name="loadingDate" class="form-control pull-right"
                                    value="<fmt:formatDate value="${shipping.loadingDate}" pattern="yyyy-MM-dd"/>"
-                                   id="datepicker" >
+                                   id="datepicker">
                         </div>
                     </div>
 
@@ -98,7 +98,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" placeholder="船期"  name="limitDate" class="form-control pull-right"
+                            <input type="text" placeholder="船期" name="limitDate" class="form-control pull-right"
                                    value="${shipping.limitDate}" id="datepicker1">
                         </div>
                     </div>
@@ -109,10 +109,26 @@
 
             <!--工具栏-->
             <div class="box-tools text-center">
-                <button type="button" onclick='document.getElementById("editForm").submit()' class="btn bg-maroon">保存
-                </button>
+
+                <button type="button" onclick='' class="btn bg-maroon" id="btnTest">保存</button>
                 <button type="button" class="btn bg-default" onclick="history.back(-1);">返回</button>
             </div>
+            <script>
+                $(function () {
+                    $("#btnTest").on("click",function () {
+                        // alert("1");
+                        var id = $("input[name='packingListId']:checked").val();;
+                        if(id==null){
+                            alert("请选择装箱单");
+                        }else {
+                            //alert(id)
+                            document.getElementById("editForm").submit();
+                           // alert("提交");
+                        }
+
+                    })
+                })
+            </script>
             <!--工具栏/-->
 
         </section>
@@ -134,7 +150,7 @@
                         <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
                             <thead>
                             <tr>
-                                <td ></td>
+                                <td></td>
                                 <td class="tableHeader">序号</td>
                                 <td class="tableHeader">买方</td>
                                 <td class="tableHeader">卖方</td>
@@ -150,7 +166,7 @@
                             <c:forEach items="${packingLists}" var="o" varStatus="status">
                                 <tr class="odd" onmouseover="this.className='highlight'"
                                     onmouseout="this.className='odd'">
-                                    <td><input type="radio" name="packingListId" value="${o.packingListId}"/></td>
+                                    <td><input type="radio" id="radioBtn" name="packingListId" value="${o.packingListId}"/></td>
                                     <td>${status.index+1}</td>
                                     <td>${o.buyer}</td>
                                     <td>${o.seller}</td>
