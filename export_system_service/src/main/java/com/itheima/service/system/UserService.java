@@ -29,4 +29,6 @@ public interface UserService {
 
     //修改密码
     void changePassword(String email, String password);
+
+    List<User> findByDegree(String degree);
 }

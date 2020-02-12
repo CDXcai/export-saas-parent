@@ -28,4 +28,6 @@ public interface UserDao {
 
     //修改密码
 	void changePassword(@Param("email") String email, @Param("password") String password);
+
+    List<User> findByDegree(String degree);
 }

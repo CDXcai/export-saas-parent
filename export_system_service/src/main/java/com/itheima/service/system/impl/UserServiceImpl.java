@@ -82,4 +82,9 @@ public class UserServiceImpl implements UserService {
         String md5Password = Encrypt.md5(password, email);
         userDao.changePassword(email, md5Password);
     }
+
+    @Override
+    public List<User> findByDegree(String degree) {
+        return userDao.findByDegree(degree);
+    }
 }
