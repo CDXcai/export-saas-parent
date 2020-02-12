@@ -1,6 +1,7 @@
 package com.itheima.web.controller.login;
 
 
+import com.itheima.common.utils.Encrypt;
 import com.itheima.domain.system.Module;
 import com.itheima.domain.system.User;
 import com.itheima.service.system.ModuleService;
@@ -79,6 +80,8 @@ public class LoginController extends BaseController {
      */
     @RequestMapping("/login")
     public String login(String email,String password) {
+        //对用户输入的密码进行加密
+        password = Encrypt.md5(password , email);
         try {
             //判断非空
             if(StringUtils.isEmpty(email) || StringUtils.isEmpty(password)){
