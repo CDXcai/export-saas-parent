@@ -66,22 +66,22 @@
                     <div class="col-md-2 title">解决方式</div>
                     <div class="col-md-4 data">
                         <div class="form-group form-inline">
-                            <div class="radio"><label><input type="radio" ${feedback.classType==1?'checked':''} name="resolution" value="1" >已修改</label></div>
-                            <div class="radio"><label><input type="radio" ${feedback.classType==2?'checked':''} name="resolution" value="2" >无需修改</label></div>
-                            <div class="radio"><label><input type="radio" ${feedback.classType==3?'checked':''} name="resolution" value="3" >重复问题</label></div>
-                            <div class="radio"><label><input type="radio" ${feedback.classType==4?'checked':''} name="resolution" value="4" >描述不完整</label></div>
-                            <div class="radio"><label><input type="radio" ${feedback.classType==5?'checked':''} name="resolution" value="5" >无法实现</label></div>
-                            <div class="radio"><label><input type="radio" ${feedback.classType==6?'checked':''} name="resolution" value="6" >其他</label></div>
+                            <div class="radio"><label><input type="radio" ${feedback.resolution==1?'checked':''} name="resolution" value="1" >已修改</label></div>
+                            <div class="radio"><label><input type="radio" ${feedback.resolution==2?'checked':''} name="resolution" value="2" >无需修改</label></div>
+                            <div class="radio"><label><input type="radio" ${feedback.resolution==3?'checked':''} name="resolution" value="3" >重复问题</label></div>
+                            <div class="radio"><label><input type="radio" ${feedback.resolution==4?'checked':''} name="resolution" value="4" >描述不完整</label></div>
+                            <div class="radio"><label><input type="radio" ${feedback.resolution==5?'checked':''} name="resolution" value="5" >无法实现</label></div>
+                            <div class="radio"><label><input type="radio" ${feedback.resolution==6?'checked':''} name="resolution" value="6" >其他</label></div>
                         </div>
                     </div>
 
                     <div class="col-md-2 title">解决难度</div>
                     <div class="col-md-4 data">
                         <div class="form-group form-inline">
-                            <div class="radio"><label><input type="radio" ${feedback.classType==1?'checked':''} name="difficulty" value="1" >极难</label></div>
-                            <div class="radio"><label><input type="radio" ${feedback.classType==2?'checked':''} name="difficulty" value="2" >比较难</label></div>
-                            <div class="radio"><label><input type="radio" ${feedback.classType==3?'checked':''} name="difficulty" value="3" >有难度</label></div>
-                            <div class="radio"><label><input type="radio" ${feedback.classType==4?'checked':''} name="difficulty" value="4" >一般</label></div>
+                            <div class="radio"><label><input type="radio" ${feedback.difficulty==1?'checked':''} name="difficulty" value="1" >极难</label></div>
+                            <div class="radio"><label><input type="radio" ${feedback.difficulty==2?'checked':''} name="difficulty" value="2" >比较难</label></div>
+                            <div class="radio"><label><input type="radio" ${feedback.difficulty==3?'checked':''} name="difficulty" value="3" >有难度</label></div>
+                            <div class="radio"><label><input type="radio" ${feedback.difficulty==4?'checked':''} name="difficulty" value="4" >一般</label></div>
                         </div>
                     </div>
 
@@ -101,7 +101,7 @@
 
         <!--工具栏-->
         <div class="box-tools text-center">
-            <button type="button" class="btn bg-default" onclick="history.back(-1);">返回</button>
+            <button type="button" class="btn btn-github" onclick="history.back(-1);">返回</button>
         </div>
         <!--工具栏/-->
 

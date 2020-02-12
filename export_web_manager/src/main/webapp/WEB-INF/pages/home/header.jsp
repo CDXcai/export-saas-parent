@@ -17,7 +17,7 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <li class="dropdown messages-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="refreshFeedback()">
                         <i class="fa fa-envelope-o"></i>
                         <c:if test="${sessionScope.loginUser.degree==0}">
                         <span class="label label-success" id="feedbackNum"></span>
@@ -42,10 +42,9 @@
 <%--------------------------------------------------%>
 
                     <script>
-                        //动态修改上级模块的数据
                         $(function () {
                             //发送ajax
-                            $.get("${ctx}/extend/feedback/list.do",function (data) {
+                            $.post("${ctx}/extend/feedback/list.do",function (data) {
                                 if (data!=0){
                                     $("#feedbackNum1").html("有"+data+"个未解决的问题");
                                 }else {
@@ -54,14 +53,20 @@
                                 $("#feedbackNum").html(data)
                         });
                         });
+
+
+                        function refreshFeedback() {
+                            $.post("${ctx}/extend/feedback/list.do");
+                        }
                     </script>
 
 
                     <%----%>
                     <ul class="dropdown-menu">
                         <c:if test="${sessionScope.loginUser.degree==0}">
-                        <li class="header" id="feedbackNum1">有个未解决的问题</li>
+                        <li class="header" id="feedbackNum1">有个未解决的问题,数据出现未更新情况请刷新页面</li>
                         </c:if>
+                        <li class="header">数据出现未更新情况请刷新页面</li>
                         <li>
                             <ul class="menu">
                                 <c:forEach items="${sessionScope.feedbackList}" var="feedback">

@@ -320,4 +320,7 @@
   <select id="findByNewFeedback" parameterType="String" resultType="Integer">
      SELECT COUNT(FEEDBACK_ID) FROM feedback_c WHERE STATE=#{state}
   </select>
+  <select id="findByToday" parameterType="String" resultMap="BaseResultMap">
+    SELECT feedback_id,create_time FROM feedback_c WHERE DATE_FORMAT(create_time,'%d')=#{today} AND state = #{state}
+  </select>
 </mapper>

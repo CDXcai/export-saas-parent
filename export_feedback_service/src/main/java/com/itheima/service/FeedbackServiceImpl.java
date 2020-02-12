@@ -61,4 +61,9 @@ public class FeedbackServiceImpl implements FeedbackService {
     public Integer findByNewFeedback(String state) {
         return feedbackDao.findByNewFeedback(state);
     }
+
+    @Override
+    public List<Feedback> findByToday(String today, String state) {
+        return feedbackDao.findByToday(today,state);
+    }
 }

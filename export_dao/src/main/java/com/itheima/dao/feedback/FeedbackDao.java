@@ -67,4 +67,6 @@ public interface FeedbackDao {
     List<Feedback> findByUserId(@Param("userId") String userId,@Param("isShare") String isShare);
 
     Integer findByNewFeedback(String state);
+
+    List<Feedback> findByToday(@Param("today") String today, @Param("state") String state);
 }

@@ -30,4 +30,6 @@ public interface FeedbackService {
     Feedback findById(String id);
 
     Integer findByNewFeedback(String state);
+
+    List<Feedback> findByToday(String today, String state);
 }

@@ -51,4 +51,5 @@
     <dubbo:annotation package="com.itheima.web"></dubbo:annotation>
 
     <dubbo:consumer check="false"></dubbo:consumer>
+
 </beans>
