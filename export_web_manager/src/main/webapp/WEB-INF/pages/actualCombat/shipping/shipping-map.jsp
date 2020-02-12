@@ -79,7 +79,8 @@
 
             var myP1 = new BMap.Point($startPointLng, $startPointLat);    //起点
             var myP2 = new BMap.Point($endPointLng, $nedPointLat);    //终点
-            var myIcon = new BMap.Icon("http://lbsyun.baidu.com/img/Mario.png", new BMap.Size(32, 70), {    //小车图片
+            var myIcon = new BMap.Icon("${ctx}/img/地图.png", new BMap.Size(50, 100), {    //小车图片
+                //http://lbsyun.baidu.com/img/Mario.png
                 //offset: new BMap.Size(0, -5),    //相当于CSS精灵
                 imageOffset: new BMap.Size(0, 0)    //图片的偏移量。为了是图片底部中心对准坐标点。
             });
@@ -93,9 +94,10 @@
                     var pts = driving.getResults().getPlan(0).getRoute(0).getPath();    //通过驾车实例，获得一系列点的数组
                     var paths = pts.length;    //获得有几个点
 
-                    var carMk = new BMap.Marker(pts[0], {icon: myIcon});
+                    var carMk = new BMap.Marker(pts[Math.ceil(paths/2)], {icon: myIcon});
                     map.addOverlay(carMk);
-                    i = 0;
+                    // i = 0;// 图标的起点位置
+                    i = Math.ceil(paths/2);
 
                     function resetMkPoint(i) {
                         carMk.setPosition(pts[i]);
@@ -108,7 +110,7 @@
                     }
 
                     setTimeout(function () {
-                        resetMkPoint(5);
+                        resetMkPoint(i);
                     }, 100)
 
                 });
