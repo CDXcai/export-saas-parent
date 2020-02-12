@@ -95,11 +95,11 @@ public class ShippingServiceImpl implements ShippingService {
         System.out.println("exportIds = " + exportIds);
         if (!StringUtils.isEmpty(exportIds)) {
             String[] exportIdArr = exportIds.split(",");
-            System.out.println("id集合"+Arrays.toString(exportIdArr));
+            //System.out.println("id集合"+Arrays.toString(exportIdArr));
             for (String exportId : exportIdArr) {
-                System.out.println("exportId = " + exportId);
+                //System.out.println("exportId = " + exportId);
                 Export export = exportDao.selectByPrimaryKey(exportId);
-                System.out.println("装箱单的export = " + export);
+                //System.out.println("装箱单的export = " + export);
                 export.setState(3);
                 exportDao.updateByPrimaryKeySelective(export);
             }

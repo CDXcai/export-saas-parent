@@ -138,6 +138,7 @@
                                 <c:if test="${o.state==1}"><font color="orange">已提交</font></c:if>
                             <td>
                                 <a href="${ctx }/actualCombat/shipping/toUpdate.do?id=${o.shippingOrderId}">[编辑]</a>
+                                <a href="${ctx }/actualCombat/shipping/toMap.do?id=${o.shippingOrderId}">[地图]</a>
                                 <%--<a href="${ctx }/actualCombat/shippingProduct/list.do?contractId=${o.shippingId}">[下载]</a>--%>
                             </td>
                         </tr>
