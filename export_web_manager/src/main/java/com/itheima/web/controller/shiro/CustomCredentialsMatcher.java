@@ -31,8 +31,7 @@ public class CustomCredentialsMatcher extends SimpleCredentialsMatcher {
         String password = new String(upToken.getPassword());
         //用户名
         String email = upToken.getUsername();
-        //对用户输入的密码进行加密
-        password = Encrypt.md5(password , email);
+
         //2.数据库的密码
         String dbPassword = (String)info.getCredentials();
 

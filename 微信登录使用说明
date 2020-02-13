@@ -1,0 +1,7 @@
+
+# 创建数据库
+
+CREATE TABLE `weixin_login` (
+  `open_id` VARCHAR(50) DEFAULT NULL,
+  `user_id` VARCHAR(50) DEFAULT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8

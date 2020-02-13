@@ -99,6 +99,10 @@
                 /system/module/list.do = myPerm["模块管理","新增模块"]
                 /index.jsp* = anon
                 /login.jsp* = anon
+                /login.jsp* = anon
+                /weixin/*=anon
+                /weixinlogin=anon
+                /weixinlogin/*=anon
                 /login* = anon
                 /logout* = anon
                 /css/** = anon

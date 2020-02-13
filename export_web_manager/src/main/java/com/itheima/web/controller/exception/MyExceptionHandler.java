@@ -19,6 +19,7 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         System.out.println("发生了异常");
+        ex.printStackTrace();
         ModelAndView mv = new ModelAndView();
         if(ex instanceof UnauthorizedException){ //比较类型
             mv.setViewName("redirect:/unauthorized.jsp");

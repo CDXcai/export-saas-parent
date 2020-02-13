@@ -89,4 +89,7 @@
         set password = #{password}
         where email = #{email}
     </update>
+    <select id="findByDegree" parameterType="String" resultMap="BaseResultMap">
+        select * from pe_user where degree = #{degree}
+    </select>
 </mapper>

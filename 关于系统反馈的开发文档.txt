@@ -1,0 +1,37 @@
+FEEDBACK_ID	FEEDBACK_ID	 数据库      数据库唯一标识 主键
+提出人	    INPUT_BY	varchar2(20) 提出用户的用户名	
+提出时间	INPUT_TIME	datetime	 数据创建的时间		
+标题	    TITLE	                varchar2(200)用户填入的标题		
+内容	    CONTENT	    text		 内容
+分类	    CLASS_TYPE	char(1)	1	 分类：1管理2安全3建议4其他
+联系电话	TEL	                varchar2(20) 用户的联系电话
+解决人	    ANSWER_BY	varchar2(20) 解决问题的saas管理员
+解决时间	ANSWER_TIME	datetime	 saas解决问题的时间
+解决办法	SOLVE_METHOD	text	 解决问题的具体步骤	
+解决方式	RESOLUTION	char(1)	1	 1已修改2无需修改3重复问题4描述不完整5无法实现6其他
+解决难度	DIFFICULTY	char(1)	1	 1极难2比较难3有难度4一般
+是否公开	IS_SHARE	char(1)	1	 0：公开 1：不公开
+状态	    STATE	    char(1)	1	 0：未解决 1：解决
+创建人	    CREATE_BY	varchar2(40) 	
+创建部门	CREATE_DEPT	varchar2(40)		
+创建日期	CREATE_TIME	datetime	
+
+简单逻辑：
+saas能看见所有问题
+用户只能看见自己的未展示问题，和其他人的已解决公开问题
+saas管理员在解决问题的时候选择问题是否公开
+saas不能添加反馈 用户不能修改反馈
+saas管理员未解决的问题有个统计会显示在图标右上角
+用户在新增反馈之后会给所有的saas管理员发送邮件
+saas管理员在解决问题之后会给提出反馈用户发送邮件
+
+
+dubbo端口 20888
+遇到的问题：
+1.数据库中的text类型，会多生成实体类与方法，修改查询比较麻烦
+解决方案
+在逆向工程中声明重写 类型为 varchar
+2.定时任务与日志冲突问题
+更改定时任务类路径
+
+有个定时任务，每天会查询所有已解决反馈的创建日期，如果超过一个月就会删除；
