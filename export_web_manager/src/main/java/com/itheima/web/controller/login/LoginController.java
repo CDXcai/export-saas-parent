@@ -80,6 +80,9 @@ public class LoginController extends BaseController {
      */
     @RequestMapping("/login")
     public String login(String email,String password) {
+        //将原密码存入会话中方便修改时进行比较-------在加密之前进行
+        session.setAttribute("password",password);
+        System.out.println("登录时候的password = " + password);
         //对用户输入的密码进行加密
         password = Encrypt.md5(password , email);
         try {
@@ -103,8 +106,6 @@ public class LoginController extends BaseController {
             User user = (User)subject.getPrincipal();
             //4.将user放入session
             session.setAttribute("loginUser" , user);
-            //将原密码存入会话中方便修改时进行比较
-            session.setAttribute("password",password);
 
             //5.查询模块信息
             List<Module> moduleList = moduleService.findByUser(user);
